@@ -12,9 +12,9 @@ python .\main.py
 
 
 ## 사용 예제
-![](./main_image.png)
-![](./example.png)
-![](./example_result.png)
+![](./main_image.PNG)
+![](./example.PNG)
+![](./example_result.PNG)
 
 <br/>
 
