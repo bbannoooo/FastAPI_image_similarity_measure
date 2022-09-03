@@ -1,7 +1,6 @@
 from io import BytesIO
 from fastapi import FastAPI, File, UploadFile
 from fastapi.responses import HTMLResponse
-from PIL import Image
 from tensorflow.keras.preprocessing.image import img_to_array
 from tensorflow.keras.models import Model, load_model
 import numpy as np
@@ -12,10 +11,14 @@ app = FastAPI()
 
 # https://github.com/luchonaveiro/image-search-engine thanks to!
 @app.post("/similarity/")
-async def create_upload_files(files: list[UploadFile], files2: list[UploadFile]):
-    print('inputfile-> ', files2[0].filename)
+# async def create_upload_files(files: list[UploadFile], input: UploadFile):
+async def create_upload_files(files: list[UploadFile] = File(...), input: UploadFile = File()):
+    print('inputfile-> ', input.filename)
+    print('comparefile-> ', files)
     for file in files:
         print('comparefile-> ', file.filename)
+        print('comparefile-> ', file)
+        print('comparefile-> ', type(file))
 
     # 유클리디안 거리
     def eucledian_distance(x,y):
@@ -27,7 +30,7 @@ async def create_upload_files(files: list[UploadFile], files2: list[UploadFile])
     autoencoder = load_model('D:/fastapi/backend/app/image_autoencoder_2.h5', compile=False)
     latent_space_model = Model(autoencoder.input, autoencoder.get_layer('latent_space').output)
     
-    input_img = files2[0]
+    input_img = input
     input_img = await input_img.read()
     input_img = Image.open(BytesIO(input_img))
     input_img = input_img.resize((256, 256))
@@ -58,7 +61,7 @@ async def main():
 <body>
 <form action="/similarity/" enctype="multipart/form-data" method="post">
 <input name="files" type="file" multiple>
-<input name="files2" type="file" multiple>
+<input name="input" type="file" multiple>
 <input type="submit">
 </form>
 </body>
