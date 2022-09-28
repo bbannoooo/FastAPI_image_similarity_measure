@@ -20,4 +20,4 @@ python .\main.py
 
 >Thanks to https://github.com/luchonaveiro/image-search-engine !!
 
-> Docker Image : https://hub.docker.com/repository/docker/b4no/fastapi-image-smilarity
+> Docker Image : https://hub.docker.com/r/b4no/fastapi-image-smilarity
