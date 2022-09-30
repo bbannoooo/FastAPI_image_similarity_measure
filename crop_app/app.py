@@ -29,6 +29,7 @@ async def crop_mmclassification(input: UploadFile = File()):
     print(img_array)
     result = inference_model(model, img_array)
     print(result)
+    return {'crop_id': np.uint32(result['pred_label']).item()}
     
 @app.get("/")
 async def main():
